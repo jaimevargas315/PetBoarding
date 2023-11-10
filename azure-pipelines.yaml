@@ -1,0 +1,46 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'Install Nuget'
+
+- task: NuGetCommand@2
+  displayName: 'Restore Nuget Packages'
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: MSBuild@1
+  displayName: 'Build Code'
+  inputs:
+    solution: '$(solution)'
+    msbuildArchitecture: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Test Cases'
+  inputs:
+    command: 'test'
+    projects: '**/*Tests.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage"'
+    publishTestResults: true
+    
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: $(Agent.TempDirectory)/*/coverage.cobertura.xml # using ** instead of * finds duplicate coverage files
+
