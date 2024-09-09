@@ -26,5 +26,10 @@ namespace WebAppTemplate.Controllers
 
             return View();
         }
+
+        public ActionResult GitBasics()
+        {
+            return Content("Git basics");
+        }
     }
 }
