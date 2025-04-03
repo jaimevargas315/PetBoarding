@@ -30,11 +30,11 @@ jobs:
           echo "Listing template-repo contents..."
           ls -R template-repo  # Output the directory structure
 
-      - name: Run Template Locally (BuildAndTestAction) with PowerShell
+      - name: Run Template Locally (BuildAndTestAction) with Windows PowerShell
         run: |
           echo "Running the BuildAndTest workflow from template-repo..."
           powershell -ExecutionPolicy Bypass -File template-repo/.gitea/workflows/BuildAndTestAction.ps1
-        shell: pwsh  # Using PowerShell Core (pwsh) to execute the script
+        shell: powershell  # Use Windows PowerShell (default)
         env:
           solution_file_path: '.'
           build_configuration: 'Release'
