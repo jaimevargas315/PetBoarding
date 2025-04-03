@@ -21,7 +21,7 @@ jobs:
 
       - name: Checkout Private Template Repository
         run: |
-          git clone https://${{ secrets.SECRET_TOKEN }}@gitea.example.com/WSS-PublicActions/Templates.git template-repo
+          git clone https://${{ secrets.SECRET_TOKEN }}@git.websurfingstudios.com/WSS-PublicActions/Templates.git template-repo
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents interactive password prompt
 
