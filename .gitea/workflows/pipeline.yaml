@@ -25,6 +25,10 @@ jobs:
           token: ${{ secrets.SECRET_TOKEN }}
           fetch-depth: 1
 
-      - name: Run BuildAndTestAction
-        run: |
-          powershell ./Templates/.gitea/workflows/BuildAndTest.yml
+      - name: Call BuildAndTest Workflow
+        uses: WSS-PublicActions/Templates/.gitea/workflows/BuildAndTest.yml@main
+        with:
+          solution_file_path: 'WebAppTemplate.sln'
+          build_configuration: 'Release'
+        env:
+          GIT_AUTH_TOKEN: ${{ secrets.SECRET_TOKEN }}
