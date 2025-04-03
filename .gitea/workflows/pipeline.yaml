@@ -15,4 +15,4 @@ jobs:
       solution_file_path: './WebAppTemplate.sln'
       build_configuration: 'Release'
     secrets:
-      SECRET_TOKEN: 'ABC'
+      SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
