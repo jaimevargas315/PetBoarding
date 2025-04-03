@@ -1,3 +1,5 @@
+version: '1.0'
+
 name: WebAppTemplateCI
 
 on:
@@ -8,12 +10,27 @@ on:
     branches:
       - main
 
+env:
+  GITEA_CI_VERSION: '1.0'
+
 jobs:
   call-build-and-test:
     name: Call BuildAndTestAction
-    uses: WSS-PublicActions/Templates/.gitea/workflows/BuildAndTest.yml@main
-    with:
-      solution_file_path: 'WebAppTemplate.sln'
-      build_configuration: 'Release'
-    secrets:
-      GITEA_TOKEN: ${{ secrets.SECRET_TOKEN }}
+    runs-on: windows
+    
+    steps:
+      - name: Checkout Parent Repository
+        uses: actions/checkout@v2
+
+      - name: Checkout BuildAndTestAction Repository
+        uses: actions/checkout@v2
+        with:
+          repository: WSS-PublicActions/Templates
+          token: ${{ secrets.SECRET_TOKEN }}
+          ref: main
+
+      - name: Run BuildAndTestAction
+        uses: ./.gitea/workflows/BuildAndTest.yml
+        with:
+          solution_file_path: 'WebAppTemplate.sln'
+          build_configuration: 'Release'
