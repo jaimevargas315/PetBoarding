@@ -27,3 +27,8 @@ jobs:
 
       - name: Run Template
         uses: ./template-repo/.gitea/workflows/BuildAndTest.yaml
+        with:
+            solution_file_path: '.'
+            build_configuration: 'Release'
+        secrets:
+            SECRET_TOKEN: ${{ secrets.SECRET_TOKEN
