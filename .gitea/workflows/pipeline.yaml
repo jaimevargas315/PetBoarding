@@ -25,7 +25,5 @@ jobs:
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents interactive password prompt
 
-      - name: Run WebAppTemplate Workflow
-        run: |
-          cp -r template-repo/.gitea/workflows/* .github/workflows/
-          echo "WebAppTemplate copied, running locally..."
+      - name: Run Template
+        uses: ./template-repo/.gitea/workflows/BuildAndTest.yaml
