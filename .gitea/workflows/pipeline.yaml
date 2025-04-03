@@ -21,14 +21,21 @@ jobs:
 
       - name: Checkout Private Template Repository
         run: |
-          git clone https://${{ secrets.SECRET_TOKEN }}@git.websurfingstudios.com/WSS-PublicActions/Templates.git template-repo
+          git clone https://oauth2:${{ secrets.SECRET_TOKEN }}@git.websurfingstudios.com/WSS-PublicActions/Templates.git template-repo
         env:
           GIT_TERMINAL_PROMPT: 0  # Prevents interactive password prompt
 
-      - name: Run Template
-        uses: ./template-repo/.gitea/workflows/BuildAndTest.yaml
-        with:
-            solution_file_path: '.'
-            build_configuration: 'Release'
-        secrets:
-            SECRET_TOKEN: ${{ secrets.SECRET_TOKEN
+      - name: Verify Cloned Repository Structure
+        run: |
+          echo "Listing template-repo contents..."
+          ls -R template-repo  # Output the directory structure
+
+      - name: Run Template Locally (BuildAndTestAction)
+        run: |
+          echo "Running the BuildAndTest workflow from template-repo..."
+          bash template-repo/.gitea/workflows/BuildAndTestAction.yml
+        shell: bash
+        env:
+          solution_file_path: '.'
+          build_configuration: 'Release'
+          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
