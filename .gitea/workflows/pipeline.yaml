@@ -10,9 +10,22 @@ on:
 
 jobs:
   build:
-    uses: WSS-PublicActions/Templates/.gitea/workflows/BuildAndTest.yml@main
-    with:
-      solution_file_path: './WebAppTemplate.sln'
-      build_configuration: 'Release'
-    secrets:
-      SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
+    name: BuildAndTest
+    runs-on: windows
+
+    steps:
+      - name: Checkout Current Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SECRET_TOKEN }}
+
+      - name: Checkout Private Template Repository
+        run: |
+          git clone https://${{ secrets.SECRET_TOKEN }}@gitea.example.com/WSS-PublicActions/Templates.git template-repo
+        env:
+          GIT_TERMINAL_PROMPT: 0  # Prevents interactive password prompt
+
+      - name: Run WebAppTemplate Workflow
+        run: |
+          cp -r template-repo/.gitea/workflows/* .github/workflows/
+          echo "WebAppTemplate copied, running locally..."
