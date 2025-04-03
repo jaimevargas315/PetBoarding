@@ -9,33 +9,11 @@ on:
       - main
 
 jobs:
-  build:
-    name: BuildAndTest
-    runs-on: windows
-
-    steps:
-      - name: Checkout Current Repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.SECRET_TOKEN }}
-
-      - name: Checkout Private Template Repository
-        run: |
-          git clone https://oauth2:${{ secrets.SECRET_TOKEN }}@git.websurfingstudios.com/WSS-PublicActions/Templates.git template-repo
-        env:
-          GIT_TERMINAL_PROMPT: 0  # Prevents interactive password prompt
-
-      - name: Verify Cloned Repository Structure
-        run: |
-          echo "Listing template-repo contents..."
-          ls -R template-repo  # Output the directory structure
-
-      - name: Run Template Locally (BuildAndTestAction) with Windows PowerShell
-        run: |
-          echo "Running the BuildAndTest workflow from template-repo..."
-          powershell -ExecutionPolicy Bypass -File template-repo/.gitea/workflows/BuildAndTestAction.ps1
-        shell: powershell  # Use Windows PowerShell (default)
-        env:
-          solution_file_path: '.'
-          build_configuration: 'Release'
-          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}
+  call-build-and-test:
+    name: Call BuildAndTestAction
+    uses: WSS-PublicActions/Templates/.gitea/workflows/BuildAndTest.yml@main
+    with:
+      solution_file_path: 'WebAppTemplate.sln'
+      build_configuration: 'Release'
+    secrets:
+      GITEA_TOKEN: ${{ secrets.SECRET_TOKEN }}
