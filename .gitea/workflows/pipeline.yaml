@@ -17,9 +17,14 @@ jobs:
       - name: Checkout Parent Repository
         uses: actions/checkout@v4
 
-      - name: Run BuildAndTestAction
-        uses: WSS-PublicActions/Templates/.gitea/workflows/BuildAndTestAction.yml@main
+      - name: Checkout BuildAndTestAction Repository
+        uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITEA_TOKEN }}
-          solution_file_path: 'WebAppTemplate.sln'
-          build_configuration: 'Release'
+          repository: WSS-PublicActions/Templates
+          ref: main
+          token: ${{ secrets.SECRET_TOKEN }}
+          fetch-depth: 1
+
+      - name: Run BuildAndTestAction
+        run: |
+          powershell ./Templates/.gitea/workflows/BuildAndTest.yml
