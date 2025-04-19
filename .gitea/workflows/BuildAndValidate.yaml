@@ -111,6 +111,12 @@ jobs:
            Write-Output "COMMIT_MESSAGE_PR: $commitMessage"
        }
        
+       # If both environment variables are empty, try to get the last commit manually
+       if ([string]::IsNullOrWhiteSpace($commitMessage)) {
+           Write-Output "No commit message from event context, attempting to fetch from git log..."
+           $commitMessage = git log -1 --pretty=%B
+       }
+       
        if ([string]::IsNullOrWhiteSpace($commitMessage)) {
            $commitMessage = "Manual trigger or unknown event"
            Write-Output "Commit Message Defaulted to: $commitMessage"
