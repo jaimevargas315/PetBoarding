@@ -15,17 +15,10 @@ namespace WebAppTemplate.Models
         public Guid InvoiceItemID { get; set; }
 
         [Required]
-        [Index(IsUnique = true)]
-        public Guid BookingID { get; set; }
-        [ForeignKey("BookingID")]
-        public virtual Bookings Booking { get; set; }
+        public Invoices Invoice { get; set; }
 
         [Required]
-        [Index(IsUnique = true)]
-        public Guid InvoiceID { get; set; }
-        [ForeignKey("InvoiceID")]
-        public virtual Invoices Invoice { get; set; }
-
+        public Bookings Booking { get; set; }
 
         [Column(TypeName = "varchar")]
         [MaxLength(200)]
@@ -33,6 +26,11 @@ namespace WebAppTemplate.Models
 
         [Column(TypeName = "decimal")]
         public decimal Price { get; set; }
+
+        public InvoiceItems()
+        {
+            InvoiceItemID = Guid.NewGuid();
+        }
 
     }
 }

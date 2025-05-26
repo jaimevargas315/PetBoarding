@@ -7,8 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppTemplate.Models
 {
-    public class Employees: User
+    public class Employees: Profiles
     {
+        public List<Payments> Payment { get; set; }
+
         [Column(TypeName ="varchar")]
         [MaxLength(20)]
         public string Position { get; set; }
@@ -25,5 +27,8 @@ namespace WebAppTemplate.Models
 
         [Column(TypeName ="varchar")]
         Guid EmergencyContactID { get; set; }
+
+        [Required]
+        public List<EmergencyContacts> EmergencyContact { get; set; }
     }
 }

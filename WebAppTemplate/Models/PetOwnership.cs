@@ -14,15 +14,14 @@ namespace WebAppTemplate.Models
         public Guid PetOwnershipID { get; set; }
 
         [Required]
-        public Guid UserID { get; set; }
-
-        [ForeignKey("UserID")]
-        public virtual User User { get; set; }
+        public Pets Pet { get; set; }
 
         [Required]
-        public Guid PetID { get; set; }
+        public Owners Owner { get; set; }
 
-        [ForeignKey("PetID")]
-        public virtual Pets Pet { get; set; }
+        public PetOwnership()
+        {
+            PetOwnershipID = Guid.NewGuid();
+        }
     }
 }

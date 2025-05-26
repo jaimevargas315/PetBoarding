@@ -13,6 +13,9 @@ namespace WebAppTemplate.Models
         [Required]
         public Guid PetID { get; set; }
 
+        public List<Bookings> Booking { get; set; }
+        public List<PetOwnership> PetOwnership { get; set; }
+
         [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Name { get; set; }
@@ -50,10 +53,11 @@ namespace WebAppTemplate.Models
         [MaxLength(500)]
         public string SpecialNeeds { get; set; }
 
-        [Required]
-        public Guid EmergencyContactID { get; set; }
+        public List<EmergencyContacts> EmergencyContact { get; set; }
 
-        [ForeignKey("EmergencyContactID")]
-        public virtual EmergencyContacts EmergencyContact { get; set; }
+        public Pets()
+        {
+            PetID = Guid.NewGuid();
+        }
     }
 }   

@@ -8,11 +8,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppTemplate.Models
 {
-    public class User
+    public class Profiles
     {
         [Key]
         [Required]
-        public Guid UserID { get; set; }
+        public Guid ProfileID { get; set; }
 
         [Column (TypeName ="varchar")]
         [MaxLength(50)]
@@ -49,6 +49,11 @@ namespace WebAppTemplate.Models
         [Column(TypeName = "char")]
         [StringLength(5)]
         public string Zip { get; set; }
+
+        public Profiles()
+        {
+            ProfileID = Guid.NewGuid();
+        }
 
     }
 }

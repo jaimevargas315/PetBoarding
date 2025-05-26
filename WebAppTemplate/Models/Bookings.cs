@@ -13,12 +13,10 @@ namespace WebAppTemplate.Models
         [Key][Required]
         public Guid BookingID { get; set; }
 
-        
         [Required]
-        public Guid PetID { get; set; }
-
-        [ForeignKey("PetID")]
-        public virtual Pets Pet { get; set; }
+        public Pets Pet { get; set; }
+        
+        public InvoiceItems InvoiceItem { get; set; }
 
         [Column(TypeName = "varchar")]
         [MaxLength(50)]
@@ -32,5 +30,12 @@ namespace WebAppTemplate.Models
         public DateTime EndTime { get; set; }
         public DateTime LastUpdated { get; set; }
         
+        public Bookings()
+        {
+            BookingID = Guid.NewGuid();
+            CreatedDate = DateTime.Now;
+            LastUpdated = DateTime.Now;
+
+        }
     }
 }

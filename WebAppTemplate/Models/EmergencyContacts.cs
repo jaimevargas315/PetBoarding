@@ -13,6 +13,9 @@ namespace WebAppTemplate.Models
         [Key]
         public Guid EmergencyContactID { get; set; }
 
+        public Pets Pet { get; set; }
+        public Employees Employee { get; set; }
+
         [Column(TypeName="varchar")]
         [MaxLength(50)]
         public string FirstName { get; set; }
@@ -32,5 +35,10 @@ namespace WebAppTemplate.Models
         [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Email { get; set; }
+
+        public EmergencyContacts()
+        {
+            EmergencyContactID = Guid.NewGuid();
+        }
     }
 }

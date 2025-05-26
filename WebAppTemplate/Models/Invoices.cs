@@ -14,16 +14,22 @@ namespace WebAppTemplate.Models
         public Guid InvoiceID { get; set; }
 
         [Required]
-        public Guid OwnerID { get; set; }
+        public Owners Owner { get; set; }
 
-        [ForeignKey("OwnerID")]
-        public virtual Owners Owner { get; set; }
+        public List<Payments> Payment { get; set; }
+
+        [Required]
+        public List<InvoiceItems> InvoiceItem { get; set; }
 
         DateTime Issuedate { get; set; }
         DateTime DueDate { get; set; }
-        public virtual ICollection<InvoiceItems> InvoiceItems { get; set; }
 
         [Column(TypeName = "decimal")]
         public decimal TotalAmount { get; set; }
+
+        public Invoices()
+        {
+            InvoiceID = Guid.NewGuid();
+        }
     }
 }

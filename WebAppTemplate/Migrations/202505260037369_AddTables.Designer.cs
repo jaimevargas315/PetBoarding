@@ -7,13 +7,13 @@ namespace WebAppTemplate.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class AddInitialTables : IMigrationMetadata
+    public sealed partial class AddTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddInitialTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "202505250351298_AddInitialTables"; }
+            get { return "202505260037369_AddTables"; }
         }
         
         string IMigrationMetadata.Source

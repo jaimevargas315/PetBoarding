@@ -12,18 +12,12 @@ namespace WebAppTemplate.Models
         [Key]
         [Required]
         public Guid PaymentID { get; set; }
-        
-        [Required]
-        public Guid InvoiceID { get; set; }
-
-        [ForeignKey("InvoiceID")]
-        public virtual Invoices Invoice { get; set; }
 
         [Required]
-        public Guid ProcessedByEmployeeID { get; set; }
+        public Invoices Invoice { get; set; }
 
-        [ForeignKey("ProcessedByEmployeeID")]
-        public virtual Employees ProcessedByEmployee { get; set; }
+        [Required]
+        public Employees ProcessedByEmployee { get; set; }
 
         [Column(TypeName ="decimal")]
         public decimal Amount { get; set; }
@@ -41,5 +35,10 @@ namespace WebAppTemplate.Models
         [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Status { get; set; }
+
+        public Payments()
+        {
+            PaymentID = Guid.NewGuid();
+        }
     }
 }

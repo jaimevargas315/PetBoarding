@@ -170,13 +170,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202505250101335_InitialCreate.cs" />
-    <Compile Include="Migrations\202505250101335_InitialCreate.Designer.cs">
-      <DependentUpon>202505250101335_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202505260032501_initialCreate.cs" />
+    <Compile Include="Migrations\202505260032501_initialCreate.Designer.cs">
+      <DependentUpon>202505260032501_initialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202505250351298_AddInitialTables.cs" />
-    <Compile Include="Migrations\202505250351298_AddInitialTables.Designer.cs">
-      <DependentUpon>202505250351298_AddInitialTables.cs</DependentUpon>
+    <Compile Include="Migrations\202505260037369_AddTables.cs" />
+    <Compile Include="Migrations\202505260037369_AddTables.Designer.cs">
+      <DependentUpon>202505260037369_AddTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -190,7 +190,7 @@
     <Compile Include="Models\Payments.cs" />
     <Compile Include="Models\PetOwnership.cs" />
     <Compile Include="Models\Pets.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Profiles.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -310,11 +310,11 @@
     <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202505250101335_InitialCreate.resx">
-      <DependentUpon>202505250101335_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202505260032501_initialCreate.resx">
+      <DependentUpon>202505260032501_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202505250351298_AddInitialTables.resx">
-      <DependentUpon>202505250351298_AddInitialTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202505260037369_AddTables.resx">
+      <DependentUpon>202505260037369_AddTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
