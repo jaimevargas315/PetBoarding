@@ -14,25 +14,21 @@ namespace WebAppTemplate.Models
         public Guid PaymentID { get; set; }
 
         [Required]
-        public Invoices Invoice { get; set; }
+        public virtual Invoices Invoice { get; set; }
 
         [Required]
-        public Employees ProcessedByEmployee { get; set; }
+        public virtual Employees ProcessedByEmployee { get; set; }
 
-        [Column(TypeName ="decimal")]
         public decimal Amount { get; set; }
 
-        DateTime PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(25)]
         public string PaymentMethod { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(100)]
         public string TransactionID { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Status { get; set; }
 

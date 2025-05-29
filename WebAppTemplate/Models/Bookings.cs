@@ -14,15 +14,11 @@ namespace WebAppTemplate.Models
         public Guid BookingID { get; set; }
 
         [Required]
-        public Pets Pet { get; set; }
+        public virtual Pets Pet { get; set; }
         
-        public InvoiceItems InvoiceItem { get; set; }
-
-        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Status { get; set; }
 
-        [Column(TypeName = "decimal")]
         public decimal Price { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -33,8 +29,8 @@ namespace WebAppTemplate.Models
         public Bookings()
         {
             BookingID = Guid.NewGuid();
-            CreatedDate = DateTime.Now;
-            LastUpdated = DateTime.Now;
+            CreatedDate = DateTime.UtcNow;
+            LastUpdated = DateTime.UtcNow;
 
         }
     }

@@ -13,26 +13,21 @@ namespace WebAppTemplate.Models
         [Key]
         public Guid EmergencyContactID { get; set; }
 
-        public Pets Pet { get; set; }
-        public Employees Employee { get; set; }
+        public virtual Pets Pet { get; set; }
+        public virtual Employees Employee { get; set; }
 
-        [Column(TypeName="varchar")]
         [MaxLength(50)]
         public string FirstName { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(20)]
         public string Relationship { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(20)]
         public string Phone { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Email { get; set; }
 

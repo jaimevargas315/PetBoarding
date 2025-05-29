@@ -162,10 +162,17 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
+    <Compile Include="Controllers\EmergencyContactsController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HoursController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\InvoiceItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyAccountController.cs" />
+    <Compile Include="Controllers\OwnersController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\PetOwnershipController.cs" />
     <Compile Include="Controllers\PetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,6 +184,14 @@
     <Compile Include="Migrations\202505260037369_AddTables.cs" />
     <Compile Include="Migrations\202505260037369_AddTables.Designer.cs">
       <DependentUpon>202505260037369_AddTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505280114188_AdjustConstraints.cs" />
+    <Compile Include="Migrations\202505280114188_AdjustConstraints.Designer.cs">
+      <DependentUpon>202505280114188_AdjustConstraints.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505290057414_AddCRUD.cs" />
+    <Compile Include="Migrations\202505290057414_AddCRUD.Designer.cs">
+      <DependentUpon>202505290057414_AddCRUD.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -281,6 +296,13 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\EmergencyContacts\" />
+    <Folder Include="Views\Employees\" />
+    <Folder Include="Views\InvoiceItems\" />
+    <Folder Include="Views\Invoice\" />
+    <Folder Include="Views\Owner\" />
+    <Folder Include="Views\Payments\" />
+    <Folder Include="Views\PetOwner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -315,6 +337,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505260037369_AddTables.resx">
       <DependentUpon>202505260037369_AddTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505280114188_AdjustConstraints.resx">
+      <DependentUpon>202505280114188_AdjustConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505290057414_AddCRUD.resx">
+      <DependentUpon>202505290057414_AddCRUD.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

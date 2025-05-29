@@ -14,10 +14,10 @@ namespace WebAppTemplate.Models
         public Guid PetOwnershipID { get; set; }
 
         [Required]
-        public Pets Pet { get; set; }
+        public virtual Pets Pet { get; set; }
 
         [Required]
-        public Owners Owner { get; set; }
+        public virtual Owners Owner { get; set; }
 
         public PetOwnership()
         {

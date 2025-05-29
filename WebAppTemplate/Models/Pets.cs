@@ -13,47 +13,38 @@ namespace WebAppTemplate.Models
         [Required]
         public Guid PetID { get; set; }
 
-        public List<Bookings> Booking { get; set; }
-        public List<PetOwnership> PetOwnership { get; set; }
+        public virtual List<Bookings> Booking { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(30)]
         public string Species { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(30)]
         public string Breed { get; set; }
 
-        [Column(TypeName = "char")]
         [StringLength(1)]
         public string Sex { get; set; }
 
-        DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(30)]
         public string Color { get; set; }
 
-        [Column(TypeName ="bit")]
         public bool IsNeuteredOrSpayed { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(500)]
         public string Allergies { get; set; }
 
-        [Column(TypeName = "text")]
         [MaxLength(1000)]
         public string MedicalNotes { get; set; }
 
-        [Column(TypeName = "varchar")]
         [MaxLength(500)]
         public string SpecialNeeds { get; set; }
 
-        public List<EmergencyContacts> EmergencyContact { get; set; }
+        [Required]
+        public virtual List<EmergencyContacts> EmergencyContacts { get; set; }
 
         public Pets()
         {
