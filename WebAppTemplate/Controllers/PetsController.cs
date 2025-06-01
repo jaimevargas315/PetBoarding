@@ -132,8 +132,7 @@ namespace WebAppTemplate.Controllers
             {
                 return Content("Error during database update: " + ex.Message); // Handle any exceptions that may occur
             }
-            return Content("Updated: " +Pet.PetID
-                );
+            return Content("Updated: " +Pet.PetID);
         }
 
         public ActionResult Delete(Guid id)
