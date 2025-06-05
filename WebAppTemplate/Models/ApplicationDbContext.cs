@@ -18,6 +18,7 @@ namespace WebAppTemplate.Models
         public DbSet<PetOwnership> PetOwnerships { get; set; }
         public DbSet<Pets> Pets { get; set; }
         public DbSet<Profiles> Profiles { get; set; }
+        public DbSet<ContactUsSubmissions> contactUsSubmissions { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false) { }       
