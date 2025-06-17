@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using WebAppTemplate.Models;
+using WebAppTemplate.App_Start;
 
 namespace WebAppTemplate
 {
@@ -18,19 +21,50 @@ namespace WebAppTemplate
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            System.Diagnostics.Debug.WriteLine("SendAsync called");
+            return SendEmailAsync(message.Destination, message.Subject, message.Body);
         }
+
+        public async Task SendEmailAsync(string destination, string subject, string body)
+        {
+            try
+            {
+                MailMessage mailMessage = EmailService.GenerateMailMessage(destination, subject, body);
+                System.Diagnostics.Debug.WriteLine("Attempting to send email...");
+                await EmailService.GetSmtpClient().SendMailAsync(mailMessage);
+                System.Diagnostics.Debug.WriteLine("Email send initiated.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Email send error: " + ex.ToString());
+                throw;
+            }
+        }
+
+        public static SmtpClient GetSmtpClient()
+        {
+            SmtpClient smtpClient = new SmtpClient(EmailServiceCredentials.EmailSMTPUrl);
+            smtpClient.Port = 587;
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential(EmailServiceCredentials.EmailSMTPUserName, EmailServiceCredentials.EmailSMTPPasswordHash);
+
+            return smtpClient;
+        }
+
+        public static MailMessage GenerateMailMessage(string destination, string subject, string body)
+        {
+            MailMessage mailMessage = new MailMessage(new MailAddress(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailFromName), new MailAddress(destination));
+            mailMessage.Subject = EmailServiceCredentials.EmailAppName + " - " + subject;
+            mailMessage.Body = body;
+            mailMessage.IsBodyHtml = true;
+
+            return mailMessage;
+        }
+
+
     }
 
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
-    }
+
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
@@ -67,17 +101,15 @@ namespace WebAppTemplate
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
-            {
-                MessageFormat = "Your security code is {0}"
-            });
+
             manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
             manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
+            System.Diagnostics.Debug.WriteLine("EmailService constructor called");
+
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
