@@ -95,7 +95,7 @@ namespace WebAppTemplate.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return View(new WebAppTemplate.Models.RegisterViewModel());
         }
 
         //
@@ -111,15 +111,78 @@ namespace WebAppTemplate.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    IdentityResult roleResult = null;
+                    bool profileCreated = false;
 
-                    return RedirectToAction("Index", "Home");
+                    if(model.UserType == "Owner")
+                    {
+                        roleResult = await UserManager.AddToRoleAsync(user.Id, "Owner");
+                        if (roleResult.Succeeded)
+                        {
+                            var owner = new Owners
+                            {               
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                Phone = model.Phone,
+                                Email = user.Email,
+                                Address1 = model.Address1,
+                                Address2 = model.Address2,
+                                City = model.City,
+                                State = model.State,
+                                Zip = model.Zip,
+                                PreferredContactMethod = model.PreferredContactMethod,
+                            };
+                            using (var db = new ApplicationDbContext())
+                            {
+                                db.Profiles.Add(owner);
+                                await db.SaveChangesAsync();
+                                profileCreated = true;
+                            }
+                        }
+                    }
+                    else if (model.UserType == "Employee")
+                    {
+                        roleResult = await UserManager.AddToRoleAsync(user.Id, "Employee");
+                        if(roleResult.Succeeded)
+                        {
+                            var employee = new Employees
+                            {
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                Phone = model.Phone,
+                                Email = user.Email,
+                                Address1 = model.Address1,
+                                Address2 = model.Address2,
+                                City = model.City,
+                                State = model.State,
+                                Zip = model.Zip,
+                                Position= model.Position,
+                                Wage = model.Wage
+                            };
+                            using (var db = new ApplicationDbContext())
+                            {
+                                db.Profiles.Add(employee);
+                                await db.SaveChangesAsync();
+                                profileCreated = true;
+                            }
+                        }
+                    }
+                    if (roleResult != null && roleResult.Succeeded && profileCreated)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        await UserManager.DeleteAsync(user); // Revert user creation if subsequent steps fail
+                        AddErrors(roleResult ?? new IdentityResult("Error assigning role or creating profile."));
+                    }
+
                 }
                 AddErrors(result);
             }
