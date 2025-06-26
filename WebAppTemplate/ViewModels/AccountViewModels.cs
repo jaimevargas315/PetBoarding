@@ -130,7 +130,7 @@ namespace WebAppTemplate.Models
         [Range(0, 9999999999999999.99)]
         public decimal Wage { get; set; }
 
-        public SelectList UserTypesList => new SelectList(new[] { "Customer", "Employee" });
+        public SelectList UserTypesList => new SelectList(new[] { "Owner", "Employee" });
     }
 
     public class ResetPasswordViewModel
