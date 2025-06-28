@@ -292,6 +292,7 @@
     <Content Include="Views\Admin\Bookings.cshtml" />
     <Content Include="Views\ContactUs\Submitted.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\RegisterSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

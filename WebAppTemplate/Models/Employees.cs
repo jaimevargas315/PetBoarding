@@ -22,12 +22,12 @@ namespace WebAppTemplate.Models
 
         public DateTime? TerminationDate { get; set; }
 
-        [Required]
         public virtual List<EmergencyContacts> EmergencyContact { get; set; }
 
         public Employees()
         {
-            
+            HireDate = DateTime.Now;
+            Active = true;
         }
     }
 }

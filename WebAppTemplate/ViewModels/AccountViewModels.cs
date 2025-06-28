@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WebAppTemplate.Models
 {
@@ -64,6 +65,8 @@ namespace WebAppTemplate.Models
 
     public class RegisterViewModel
     {
+        public string UserType { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -77,8 +80,57 @@ namespace WebAppTemplate.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "First Name")]
+        [StringLength(50)]
+        public string FirstName { get; set; }
+        
+        [Display(Name = "Last Name")]
+        [StringLength(50)]
+        public string LastName { get; set; }
+
+        [Display(Name = "Phone")]
+        [StringLength(10)]
+        public string Phone { get; set; }
+
+        [Display(Name = "Address 1")]
+        [StringLength(100)]
+        public string Address1 { get; set; }
+
+        [Display(Name = "Address 2")]
+        [StringLength(100)]
+        public string Address2 { get; set; }
+
+        [Display(Name = "City")]
+        [StringLength(50)]
+        public string City { get; set; }
+
+        [Display(Name = "State")]
+        [StringLength(2)]
+        public string State { get; set; }
+
+        [Display(Name = "Zip Code")]
+        [StringLength(5)]
+        public string Zip { get; set; }
+
+        // for owners 
+        [Display(Name = "Preferred contact method:")]
+        [StringLength(20)]
+        public string PreferredContactMethod { get; set; }
+
+        // for employees
+        [Display(Name = "Position")]
+        [StringLength(20)]
+        public string Position { get; set; }
+
+        [Display(Name = "Wage")]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$")]
+        [Range(0, 9999999999999999.99)]
+        public decimal Wage { get; set; }
+
+        public SelectList UserTypesList => new SelectList(new[] { "Owner", "Employee" });
     }
 
     public class ResetPasswordViewModel
@@ -94,9 +146,10 @@ namespace WebAppTemplate.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
