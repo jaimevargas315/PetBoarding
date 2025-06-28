@@ -1,0 +1,148 @@
+﻿@model PetBoarding.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserType, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.UserType, Model.UserTypesList, "Select User Type", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Address1, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Address2, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.City, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.State, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Zip, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Zip, new { @class = "form-control" })
+            </div>
+        </div>
+        @* contitional field for owner*@
+        <div class="form-group" id="ownerFields1" style="display:none;">
+            @Html.LabelFor(m => m.PreferredContactMethod, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PreferredContactMethod, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PreferredContactMethod, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @* conditional fields for employee *@
+        <div class="form-group" id="employeeFields1" style="display:none;">
+            @Html.LabelFor(m => m.Position, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Position, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" id="employeeFields2" style="display:none;">
+            @Html.LabelFor(m => m.Wage, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Wage, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Wage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-outline-dark" />
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Function to toggle visibility of profile-specific fields
+            function toggleProfileFields() {
+                var userType = $('#UserType').val(); // Get selected value from dropdown
+
+                $('#ownerFields1').hide();
+                $('#employeeFields1').hide();
+                $('#employeeFields2').hide();
+
+                if (userType === "Customer") {
+                    $('#ownerFields1').show();
+                } else if (userType === "Employee") {
+                    $('#employeeFields1').show();
+                    $('#employeeFields2').show();
+                }
+            }
+
+            // Call on page load to set initial state
+            toggleProfileFields();
+
+            // Call whenever the dropdown selection changes
+            $('#UserType').change(toggleProfileFields);
+        });
+    </script>
+
+}
